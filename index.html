@@ -157,7 +157,7 @@ input:checked + .slider:before {
             <div class="col-md-3" >
                 <!-- Contact Info on the Sidebar and image -->
                 <div style="font-family: Arial, Helvetica, sans-serif; font-size: 27px;"><b>Youxin Pang</b></div><br>
-                <img class="img-responsive" src="files/yong.jpg" height="400" width="400" alt=""><br>
+                <img class="img-responsive" src="files/pang.jpg" height="400" width="400" alt=""><br>
                 <p>Postgraduate Student<br>
                 NLPR, CASIA<br></p>
                 <p><b>Email:</b> pangyouxin2020 AT ia.ac.cn<br>
@@ -228,8 +228,7 @@ input:checked + .slider:before {
       <div class="row">
         <div class="col-md-10">
         <h3 id="publication">Selected Publications</h3> 
-        （ NAME<b><sup><font size="1" color="red">1</font></sup></b> indicates co-first author. <b><span lang="EN-US" style="mso-bidi-font-size:8pt;font-family:Wingdings;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman';color:blue;mso-char-type:symbol;mso-symbol-font-family:Wingdings">*</span></b>
-        indicates corresponding author. ） <br>
+        <br>
 
         <!-- <table cellspacing="20">
           <tbody>
@@ -243,24 +242,82 @@ input:checked + .slider:before {
         
         
         <p> 3. <b>Progressive polarization based reflection removal via realistic training data generation</b>. <br>
-            <b>Youxin Pang <span lang="EN-US" style="mso-bidi-font-size:8pt;font-family:Wingdings;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman';color:blue;mso-char-type:symbol;mso-symbol-font-family:Wingdings">*</span></b>, Mengke Yuan, Qiang Fu, Peiran Ren, Dong-Ming Yan <br> 
+            <b>Youxin Pang </b>, Mengke Yuan, Qiang Fu, Peiran Ren, Dong-Ming Yan <br> 
             <i>Pattern Recognition (<b>PR</b>).</i> <br>
             <a href="https://www.sciencedirect.com/science/article/abs/pii/S0031320321006737">[paper]</a>
             <!-- <a href="https://feiiyin.github.io/StyleHEAT/">[Project Page]</a> -->
         </p>
 
         <p> 2. <b>SDALIE-GAN: Structure and Detail Aware GAN for Low-light Image Enhancement</b>. <br>
-            <b>Youxin Pang <span lang="EN-US" style="mso-bidi-font-size:8pt;font-family:Wingdings;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman';color:blue;mso-char-type:symbol;mso-symbol-font-family:Wingdings">*</span></b>, Mengke Yuan, Yuchun Chang, Dong-Ming Yan <br> 
+            <b>Youxin Pang</b>, Mengke Yuan, Yuchun Chang, Dong-Ming Yan <br> 
             <i>PG2021 Short Papers, Posters, and Work-in-Progress Papers</i> <br>
             <a href="https://diglib.eg.org/handle/10.2312/pg20211393">[paper]</a>
             <!-- <a href="https://feiiyin.github.io/StyleHEAT/">[Project Page]</a> -->
         </p>
 
         <p> 1. <b>Reflection Removal via Realistic Training Data Generation</b>. <br>
-            <b>Youxin Pang <span lang="EN-US" style="mso-bidi-font-size:8pt;font-family:Wingdings;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman';color:blue;mso-char-type:symbol;mso-symbol-font-family:Wingdings">*</span></b>, Mengke Yuan, Qiang Fu, Dong-Ming Yan <br> 
+            <b>Youxin Pang </b>, Mengke Yuan, Qiang Fu, Dong-Ming Yan <br> 
             <i>ACM SIGGRAPH 2020 Posters</i> <br>
             <a href="https://dl.acm.org/doi/10.1145/3388770.3407419">[paper]</a>
         </p>
-    </body>
+            
+
+
+          </div>
+        
+      </div>
+
+      <hr>
+
+
+      <hr>
+ <!-- Other people may like it too! -->
+     <div>
+    <p style="font-size:0.9em; float:right; color:#787878;"> Thanks to <u> <a style="color:#787878" target="_blank" href="https://mavroud.is/">Vasilios Mavroudis</a></u> for the <u><a style="color:#787878" target="_blank" href="https://github.com/mavroudisv/plain-academic">template</a></u>!.</p>
+    </div>
+    <!-- /.container -->
+
+
+<script>
+
+const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+
+function switchTheme(e) {
+    if (e.target.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    else {
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+}
+
+toggleSwitch.addEventListener('change', switchTheme, false);
+
+function switchTheme(e) {
+    if (e.target.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark'); //add this
+    }
+    else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light'); //add this
+    }
+}
+
+
+const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    if (currentTheme === 'dark') {
+        toggleSwitch.checked = true;
+    }
+}
+
+</script>
+
+
+</body>
 
 </html>
