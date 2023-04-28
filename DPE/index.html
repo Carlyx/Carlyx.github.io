@@ -194,16 +194,30 @@
   <div class="hero-body">
     <div class="container">
       <!-- Paper video. -->
-      <h2 class="title is-3"><strong>Video1</strong>: Talking in different languages</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <video controls=""  width="100%">
-                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
-                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/talking.mp4?raw=true" type="video/mp4">
-          </video>
+      <h2 class="title is-3"><strong>Video1</strong>: Video Portrait Editing</h2>
+      <div class="video">
+        <!--    <div class="l-page video">-->
+        <video controls="" loop="" width="100%">
+            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+            <source src="./videos/video4_au.mp4" type="video/mp4">
+        </video>
+        <video controls="" loop="" width="100%">
+            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+            <source src="./videos/video1_au.mp4" type="video/mp4">
+        </video>
+        <video controls="" loop="" width="100%">
+            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+            <source src="./videos/video3_au.mp4" type="video/mp4">
+        </video>
+        <div class="videocaption">
+            <div>
+                <strong>
+                    Video:
+                </strong>
+                Comparisons with state-of-the-art methods on video portrait editing.
+            </div>
         </div>
-      </div>
+    </div>
     </div>
   </div>
 </section>
@@ -393,12 +407,12 @@
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@misc{sadtalker,
-        title={SadTalker: Learning Realistic 3D Motion Coefficients for Stylized Audio-Driven Single Image Talking Face Animation},
-        author={Zhang, Wenxuan and Cun, Xiaodong and Wang, Xuan and Zhang, Yong and Shen, Xi and Guo, Yu and Shan, Ying and Wang, Fei},
-        year={2022},
-        eprint={2211.12194},
-}
+      <pre><code>@article{pang2023dpe,
+        title={DPE: Disentanglement of Pose and Expression for General Video Portrait Editing},
+        author={Pang, Youxin and Zhang, Yong and Quan, Weize and Fan, Yanbo and Cun, Xiaodong and Shan, Ying and Yan, Dong-ming},
+        journal={arXiv preprint arXiv:2301.06281},
+        year={2023}
+      }
 </code></pre>
     </div>
 </section>
