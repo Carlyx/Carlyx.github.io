@@ -1,665 +1,432 @@
 <!DOCTYPE html>
-<!-- saved from url=(0035)https://nvlabs.github.io/stylegan3/ -->
-<html lang="" xml:lang="" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>
-        DPE
-    </title>
-    <meta content="DPE: Disentanglement of Pose and Expression for General Video Portrait Editing="og:title">
-    <meta content="DPE: Disentanglement of Pose and Expression for General Video Portrait Editing"
-          name="description" property="og:description">
-    <meta content="https://carlyx.github.io/DPE/" property="og:url">
-    <!-- Format -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
-    <link rel="stylesheet" href="../format/app.css">
-    <link rel="stylesheet" href="../format/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
-    <script src="../format/app.js"></script>
-
-    <style type="text/css">
-        :root {
-            --small-thumb-border-radius: 2px;
-            --larger-thumb-border-radius: 3px;
-        }
-
-        html {
-            font-size: 14px;
-            line-height: 1.6;
-            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-            -webkit-text-size-adjust: 100%;
-        }
-
-        @media (min-width: 768px) {
-            html {
-                font-size: 16px;
-            }
-        }
-
-        body {
-            margin: 0px;
-            padding: 0px;
-        }
-
-        .base-grid,
-        .n-header,
-        .n-byline,
-        .n-title,
-        .n-article,
-        .n-footer {
-            display: grid;
-            justify-items: stretch;
-            grid-template-columns: [screen-start] 8px [page-start kicker-start text-start gutter-start middle-start] 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr [text-end page-end gutter-end kicker-end middle-end] 8px [screen-end];
-            grid-column-gap: 8px;
-        }
-
-        .grid {
-            display: grid;
-            grid-column-gap: 8px;
-        }
-
-        @media (min-width: 768px) {
-            .base-grid,
-            .n-header,
-            .n-byline,
-            .n-title,
-            .n-article,
-            .n-footer {
-                display: grid;
-                justify-items: stretch;
-                grid-template-columns: [screen-start] 1fr [page-start kicker-start middle-start text-start] 45px 45px 45px 45px 45px 45px 45px 45px [ kicker-end text-end gutter-start] 45px [middle-end] 45px [page-end gutter-end] 1fr [screen-end];
-                grid-column-gap: 16px;
-            }
-
-            .grid {
-                grid-column-gap: 16px;
-            }
-        }
-
-        @media (min-width: 1000px) {
-            .base-grid,
-            .n-header,
-            .n-byline,
-            .n-title,
-            .n-article,
-            .n-footer {
-                display: grid;
-                justify-items: stretch;
-                grid-template-columns: [screen-start] 1fr [page-start kicker-start] 50px [middle-start] 50px [text-start kicker-end] 50px 50px 50px 50px 50px 50px 50px 50px [text-end gutter-start] 50px [middle-end] 50px [page-end gutter-end] 1fr [screen-end];
-                grid-column-gap: 16px;
-            }
-
-            .grid {
-                grid-column-gap: 16px;
-            }
-        }
-
-        @media (min-width: 1180px) {
-            .base-grid,
-            .n-header,
-            .n-byline,
-            .n-title,
-            .n-article,
-            .n-footer {
-                display: grid;
-                justify-items: stretch;
-                grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
-                grid-column-gap: 32px;
-            }
-
-            .grid {
-                grid-column-gap: 32px;
-            }
-
-        }
-
-        .base-grid {
-            grid-column: screen;
-        }
-
-        /* default grid column assignments */
-        .n-title > * {
-            grid-column: text;
-        }
-
-        .n-article > * {
-            grid-column: text;
-        }
-
-        .n-header {
-            height: 0px;
-        }
-
-        .n-footer {
-            height: 60px;
-        }
-
-        .n-title {
-            padding: 4rem 0 1.5rem;
-        }
-
-        .l-page {
-            grid-column: page;
-        }
-
-        .l-article {
-            grid-column: text;
-        }
-
-        p {
-            margin-top: 0;
-            margin-bottom: 1em;
-        }
-
-        .pixelated {
-            image-rendering: pixelated;
-        }
-
-        strong {
-            font-weight: 600;
-        }
-
-        /*------------------------------------------------------------------*/
-        /* title */
-        .n-title h1 {
-            font-family: "Barlow", system-ui, Arial, sans-serif;
-            color: #082333;
-            grid-column: text;
-            font-size: 40px;
-            font-weight: 700;
-            line-height: 1.1em;
-            margin: 0 0 0.5rem;
-            text-align: center;
-        }
-
-        @media (min-width: 768px) {
-            .n-title h1 {
-                font-size: 45px;
-            }
-        }
-
-        /*------------------------------------------------------------------*/
-        /* article */
-        .n-article {
-            color: rgb(33, 40, 53);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            padding-top: 2rem;
-        }
-
-        .n-article h2 {
-            contain: layout style;
-            font-weight: 600;
-            font-size: 24px;
-            line-height: 1.25em;
-            margin: 2rem 0 1.5rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            padding-bottom: 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .n-article {
-                line-height: 1.7;
-            }
-
-            .n-article h2 {
-                font-size: 36px;
-            }
-        }
-
-        /*------------------------------------------------------------------*/
-        /* byline */
-
-        .n-byline {
-            contain: style;
-            overflow: hidden;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            font-size: 0.8rem;
-            line-height: 1.8em;
-            padding: 1.5rem 0;
-            min-height: 1.8em;
-        }
-
-        .n-byline .byline {
-            grid-column: text;
-        }
-
-        .byline {
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
-
-        .grid {
-            display: grid;
-            grid-column-gap: 8px;
-        }
-
-        @media (min-width: 768px) {
-            .grid {
-                grid-column-gap: 16px;
-            }
-        }
-
-        .n-byline p {
-            margin: 0;
-        }
-
-        .n-byline h3 {
-            font-size: 0.6rem;
-            font-weight: 400;
-            color: rgba(0, 0, 0, 0.5);
-            margin: 0;
-            text-transform: uppercase;
-        }
-
-        .n-byline .authors-affiliations {
-            grid-column-end: span 2;
-            grid-template-columns: 1fr 1fr;
-        }
-
-        /*------------------------------------------------------------------*/
-        /* figures */
-        .figure {
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        figcaption, .figcaption {
-            color: rgba(0, 0, 0, 0.6);
-            font-size: 12px;
-            line-height: 1.5em;
-        }
-
-        ul.authors {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
-        }
-
-        ul.authors li {
-            padding: 0 0.5rem;
-            display: inline-block;
-        }
-
-        ul.authors sup {
-            color: rgb(126, 126, 126);
-        }
-
-        ul.authors.affiliations {
-            margin-top: 0.5rem;
-        }
-
-        ul.authors.affiliations li {
-            color: rgb(126, 126, 126);
-        }
-
-        /* Download section columns.  This switches between two layouts::after
-
-        - two columns on larger viewport sizes: side-by-side paper thumb and links
-        - single column: no thumb
-         */
-        .download-section {
-            display: grid;
-            grid-template-areas: "links";
-        }
-
-        .download-section h4 {
-            margin-left: 2.5rem;
-            display: block;
-        }
-
-        .download-thumb {
-            grid-area: thumb;
-            display: none;
-        }
-
-        .download-links {
-            grid-area: links;
-        }
-
-        img.dropshadow {
-            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        @media (min-width: 1180px) {
-            .download-section {
-                display: grid;
-                grid-template-areas: "thumb links";
-            }
-
-            .download-thumb {
-                display: block;
-            }
-        }
-
-        /* For BibTeX */
-        pre {
-            font-size: 0.9em;
-            padding-left: 7px;
-            padding-right: 7px;
-            padding-top: 3px;
-            padding-bottom: 3px;
-            border-radius: 3px;
-            background-color: rgb(235, 235, 235);
-            overflow-x: auto;
-        }
-
-        /* video caption */
-
-        .video {
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .videocaption {
-            display: flex;
-            font-size: 16px;
-            line-height: 1.5em;
-            margin-bottom: 1rem;
-            justify-content: center;
-        }
-
-        h3.figtitle {
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-
-        .grid {
-            display: grid;
-            grid-column-gap: 8px;
-        }
-
-        .fig-slider img.play_button {
-            margin-right: 8px;
-            cursor: pointer;
-            justify-self: center;
-        }
-
-        .fig-slider svg {
-            touch-action: none;
-        }
-
-        /*---------------------------------------------------------------------*/
-    </style>
-    <!-- inline stylesheet files into the above <style> element -->
-    <link href="./Alias-Free Generative Adversarial Networks (StyleGAN3)_files/css" rel="stylesheet">
-    <link as="image" href="./Alias-Free Generative Adversarial Networks (StyleGAN3)_files/paper-pdf-512.png"
-          rel="preload">
-    <link as="image"
-          href="./Alias-Free Generative Adversarial Networks (StyleGAN3)_files/stylegan3-teaser-1920x1006.png"
-          rel="preload">
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="DPE: Disentanglement of Pose and Expression for General Video Portrait Editing">
+  <meta property="og:title" content="DPE: Disentanglement of Pose and Expression for General Video Portrait Editing"/>
+  <meta property="og:description" content="DPE: Disentanglement of Pose and Expression for General Video Portrait Editing"/>
+  <meta property="og:url" content="https://carlyx.github.io/DPE/"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="DPE: Disentanglement of Pose and Expression for General Video Portrait Editing">
+  <meta name="twitter:description" content="DPE: Disentanglement of Pose and Expression for General Video Portrait Editing">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>DPE</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
 </head>
 <body>
-<div class="n-header">
-</div>
-<div class="n-title">
-    <h1>
-        DPE: Disentanglement of Pose and Expression for General Video Portrait Editing
-    </h1>
-</div>
-<div class="n-byline">
-    <div class="byline">
-        <ul class="authors">
-            <li>
-                <a href="https://carlyx.github.io/">
-                    Youxin Pang
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h3 class="xtitle is-1 publication-title">DPE:
+              Disentanglement of Pose and Expression for General Video Portrait Editing</h3>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="#" target="_blank">Youxin Pang</a><sup>1,2,3</sup>
+              </span>
+                <span class="author-block">
+                  <a href="https://yzhang2016.github.io/" target="_blank">Yong Zhang</a><sup>3</sup>
+                </span>
+                  <span class="author-block">
+                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=PMR9cooAAAAJ" target="_blank">Weize Quan</a><sup>1,2</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://sites.google.com/site/yanbofan0124/" target="_blank">Yanbo Fan</a><sup>3</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://vinthony.github.io/academic/" target="_blank">Xiaodong Cun</a><sup>3</sup>
+                  </span>
+                  <br>
+                  <span class="author-block">
+                    <a href="https://scholar.google.com/citations?user=4oXBp9UAAAAJ&hl=zh-CN" target="_blank">Ying Shan</a><sup>3</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://sites.google.com/site/yandongming/" target="_blank">Dong-ming Yan</a><sup>1,2</sup>
+                  </span>
+                  </div>
+                  <br>
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">
+                      <sup>1</sup> MAIS & NLPR, Institute of Automation, Chinese Academy of Sciences, Beijing, China &nbsp;&nbsp;&nbsp;
+                      <sup>2</sup> School of Artificial Intelligence, University of Chinese Academy of Sciences &nbsp;&nbsp;&nbsp;
+                      <sup>3</sup> Tencent AI Lab, ShenZhen, China
+                      <br>CVPR 2023</span>
+                  </div>
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/abs/2301.06281" target="_blank"
+                        class="external-link ">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/Carlyx/DPE" target="_blank"
+                    class="external-link ">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="" target="_blank"
+                  class="external-link ">
+                  <span>🤗 Demo (Hugging Face Space)</span>
                 </a>
-                <sup>
-                    1,2
-                </sup>
-            </li>
-            <li>
-                <a href="https://yzhang2016.github.io/">
-                    Yong Zhang
+              </span>
+
+              <span class="link-block">
+                  <a href="" target="_blank"
+                  class="external-link ">
+                  <span>🧿 Demo (Colab)</span>
                 </a>
-                <sup>
-                    3
-                </sup>
-            </li>
-            <li>
-                <a href="https://scholar.google.com/citations?hl=zh-CN&user=PMR9cooAAAAJ">
-                    Weize Quan
-                </a>
-                <sup>
-                    1,2
-                </sup>
-            </li>
-            <li>
-                <a href="https://sites.google.com/site/yanbofan0124/">
-                    Yanbo Fan
-                </a>
-                <sup>
-                    3
-                </sup>
-            </li>
-            <li>
-                <a href="https://vinthony.github.io/academic/">
-                    Xiaodong Cun
-                </a>
-                <sup>
-                    3
-                </sup>
-            </li>
-            <li>
-                <a href="https://scholar.google.com/citations?user=4oXBp9UAAAAJ&hl=zh-CN">
-                    Ying Shan
-                </a>
-                <sup>
-                    3
-                </sup>
-            </li>
-            <li>
-                <a href="https://sites.google.com/site/yandongming/">
-                    Dong-ming Yan
-                </a>
-                <sup>
-                    1,2
-                </sup>
-            </li>
-        </ul>
-        <ul class="authors affiliations">
-            <li>
-                <sup>
-                    1
-                </sup>
-                NLPR, Institute of Automation, Chinese Academy of Sciences
-            </li>
-            <li>
-                <sup>
-                    2
-                </sup>
-                School of Artificial Intelligence, University of Chinese Academy of Sciences
-            </li>
-            <li>
-                <sup>
-                    3
-                </sup>
-                Tencent AI Lab, ShenZhen, P.R.China
-            </li>
-        </ul>
+              </span>
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-<div class="n-article">
+  </div>
+</section>
+
+
+<!-- Teaser video-
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video controls=""  width="100%">
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/sadtalker_supp.mp4?raw=true" type="video/mp4">
+                </video>
+    </div>
+  </div>
+</section>
+ End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            One-shot video-driven talking face generation aims at producing a synthetic talking video by  transferring the facial motion from a video to an arbitrary portrait image. 
+            Head pose and facial expression are always entangled in facial motion and transferred simultaneously.
+            However, the entanglement sets up a barrier for these methods to be used in video portrait editing directly, where it may require to modify the expression only while maintaining the pose unchanged. 
+            One challenge of decoupling pose and expression is the lack of paired data, such as the same pose but different expressions.
+            Only a few methods attempt to tackle this challenge with the feat of 3D Morphable Models (3DMMs) for explicit disentanglement. 
+            But 3DMMs are not accurate enough to capture facial details due to the limited number of Blendshapes, which has side effects on motion transfer. 
+            In this paper, we introduce a novel self-supervised disentanglement framework to decouple pose and expression without 3DMMs and paired data, which consists of a motion editing module, a pose generator, and an expression generator. 
+            The editing module projects faces into a latent space where pose motion and expression motion can be disentangled, and the pose or expression transfer can be performed in the latent space conveniently via addition. 
+            The two generators render the modified latent codes to images, respectively. 
+            Moreover, to guarantee the disentanglement, we propose a bidirectional cyclic training strategy with well-designed constraints.  
+            Evaluations demonstrate our method can control pose or expression independently and be used for general video editing.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<!-- Teaser video-->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Pipeline</h2>
     <div class="l-article">
-        <img src="./images/teaser.jpg" width="100%">
+      <img src="./images/teaser.jpg" width="100%">
     </div>
     <div class="l-article">
-        <img src="./images/pipeline.jpg" width="100%">
+      <img src="./images/pipeline.jpg" width="100%">
     </div>
-    <h2 id="abstract">
-        Abstract
-    </h2>
-    <p>
-        One-shot video-driven talking face generation aims at producing a synthetic talking video by  transferring the facial motion from a video to an arbitrary portrait image. 
-        Head pose and facial expression are always entangled in facial motion and transferred simultaneously.
-        However, the entanglement sets up a barrier for these methods to be used in video portrait editing directly, where it may require to modify the expression only while maintaining the pose unchanged. 
-        One challenge of decoupling pose and expression is the lack of paired data, such as the same pose but different expressions.
-        Only a few methods attempt to tackle this challenge with the feat of 3D Morphable Models (3DMMs) for explicit disentanglement. 
-        But 3DMMs are not accurate enough to capture facial details due to the limited number of Blendshapes, which has side effects on motion transfer. 
-        In this paper, we introduce a novel self-supervised disentanglement framework to decouple pose and expression without 3DMMs and paired data, which consists of a motion editing module, a pose generator, and an expression generator. 
-        The editing module projects faces into a latent space where pose motion and expression motion can be disentangled, and the pose or expression transfer can be performed in the latent space conveniently via addition. 
-        The two generators render the modified latent codes to images, respectively. 
-        Moreover, to guarantee the disentanglement, we propose a bidirectional cyclic training strategy with well-designed constraints.  
-        Evaluations demonstrate our method can control pose or expression independently and be used for general video editing.
-    </p>
-    <h2 id="links">
-        Links
-    </h2>
-    <!--    <div class="grid download-section">-->
-    <!--        <div class="download-thumb">-->
-    <!--            <a href="https://nvlabs-fi-cdn.nvidia.com/stylegan3/stylegan3-paper.pdf">-->
-    <!--                <img class="dropshadow"-->
-    <!--                     src="./Alias-Free Generative Adversarial Networks (StyleGAN3)_files/paper-pdf-512.png">-->
-    <!--            </a>-->
-    <!--        </div>-->
-    <!--        <div class="download-links">-->
-    <!--            <ul>-->
-    <!--                <li>-->
-    <!--                    <a href="https://nvlabs-fi-cdn.nvidia.com/stylegan3/stylegan3-paper.pdf">-->
-    <!--                        Paper PDF-->
-    <!--                    </a>-->
-    <!--                </li>-->
-    <!--                <li>-->
-    <!--                    <a href="https://arxiv.org/abs/2106.12423">-->
-    <!--                        arXiv-->
-    <!--                    </a>-->
-    <!--                </li>-->
-    <!--                <li>-->
-    <!--                    <a href="https://github.com/NVlabs/stylegan3">-->
-    <!--                        Code release on GitHub-->
-    <!--                    </a>-->
-    <!--                </li>-->
-    <!--            </ul>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2 text-center">
-            <ul class="nav nav-pills nav-justified">
-                <li>
-                    <a href="https://arxiv.org/pdf/2301.06281.pdf">
-                        <img src="../images/slide_icon.jpg" height="100px"><br>
-                        <h4><strong>Paper</strong></h4>
-                    </a>
-                </li>
-                <li>
+  </div>
+</section>
+<!-- End teaser video -->
 
-                    <a href="https://carlyx.github.io/DPE/">
-                        <img src="../images/youtube_icon.jpg" height="100px"><br>
-                        <h4><strong>Project</strong></h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/Carlyx/DPE">
-                        <img src="../images/github_icon.jpg" height="100px"><br>
-                        <h4><strong>Code</strong></h4>
-                    </a>
-                </li>
-            </ul>
+<!-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video1</strong>: Talking in different languages</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/talking.mp4?raw=true" type="video/mp4">
+          </video>
         </div>
+      </div>
     </div>
-        <h2 id="videos">
-        Video Portrait Editing
-    </h2>
-    <div class="video">
-        <!--    <div class="l-page video">-->
-        <video controls="" loop="" width="100%">
-            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
-            <source src="./videos/video4_au.mp4" type="video/mp4">
-        </video>
-        <video controls="" loop="" width="100%">
-            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
-            <source src="./videos/video1_au.mp4" type="video/mp4">
-        </video>
-        <video controls="" loop="" width="100%">
-            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
-            <source src="./videos/video3_au.mp4" type="video/mp4">
-        </video>
-        <div class="videocaption">
-            <div>
-                <strong>
-                    Video:
-                </strong>
-                Comparisons with state-of-the-art methods on video portrait editing.
-            </div>
-        </div>
-    </div>
-    <h2 id="videos">
-        Audio Driving
-    </h2>
-    <div class="box">
-        <div class="left", style="float:left; width:100%;">
-            <video controls="" loop="" width="100%">
-                <source src="./videos/ori.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="right", style="float:right; width:100%;">
-            <video controls="" loop="" width="100%">
-                <source src="./videos/res.mp4" type="video/mp4">
-            </video>
-            <div class="videocaption">
-                <div>
-                    <strong>
-                        Video:
-                    </strong>
-                    For visual driving, it is implemented by our method directly. 
-                    For audio driving, there are two steps. 
-                    The first is audio driving by <a href="https://sadtalker.github.io/">Sadtalker</a>. The second is expression transfer by our method.
-                </div>
-            </div>
-        </div>
-    </div>
-    <h2 id="videos">
-        Pose Driving
-    </h2>
-    <div class="video">
-        <video controls="" loop="" width="100%">
-            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
-            <source src="./videos/pose1.mp4" type="video/mp4">
-        </video>
-        <video controls="" loop="" width="100%">
-            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
-            <source src="./videos/pose2.mp4" type="video/mp4">
-        </video>
-        <div class="videocaption">
-            <div>
-                <strong>
-                    Video:
-                </strong>
-                Comparisons with state-of-the-art methods on pose driving.
-            </div>
-        </div>
-    </div>
+  </div>
+</section>
 
-<!--    <h2 id="pipeline">-->
-<!--        Pipeline-->
-<!--    </h2>-->
-<!--    <div class="l-article">-->
-<!--        <img src="./images/pipeline.jpg" width="100%">-->
-<!--    </div>-->
 
-    <h2 id="citation">
-        Citation
-    </h2>
-    <pre><code>
-        @article{pang2023dpe,
-            title={DPE: Disentanglement of Pose and Expression for General Video Portrait Editing},
-            author={Pang, Youxin and Zhang, Yong and Quan, Weize and Fan, Yanbo and Cun, Xiaodong and Shan, Ying and Yan, Dong-ming},
-            journal={arXiv preprint arXiv:2301.06281},
-            year={2023}
-          }
+
+<!-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video2</strong>: Speaking Chinese</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/chinese_speaker.mp4?raw=true" type="video/mp4">
+                </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End youtube video
+
+  !-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video3</strong>: Singing in different languages</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/sing.mp4?raw=true" type="video/mp4">
+                </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End youtube video
+
+  !-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video4</strong>: Controllable eye blinking</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/eye%20blinking.mp4?raw=true" type="video/mp4">
+                </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End youtube video
+
+  !-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video5</strong>: Comparison on the HDTF dataset</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/compare.mp4?raw=true" type="video/mp4">
+                </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End youtube video
+
+
+    !-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video6</strong>: Comparison on the VoxCeleb2 dataset</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/comparison_crossid.mp4?raw=true" type="video/mp4">
+                </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End youtube video
+
+
+    !-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video7</strong>: The results of the same driven audio with different styles</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/different_style_same_audio.mp4?raw=true" type="video/mp4">
+                </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video8</strong>:  The results of different driven audios with the same style</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/different_audio_same_style.mp4?raw=true" type="video/mp4">
+                </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video9</strong>:  Ablation on ExpNet</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/ablation_ExpNet.mp4?raw=true" type="video/mp4">
+                </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video10</strong>: Ablation on face render</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <video controls=""  width="100%">
+                    <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+                    <source src="https://github.com/sadtalker/sadtalker.github.io/blob/main/static/videos/ablation_facerender.mp4?raw=true" type="video/mp4">
+                </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@misc{sadtalker,
+        title={SadTalker: Learning Realistic 3D Motion Coefficients for Stylized Audio-Driven Single Image Talking Face Animation},
+        author={Zhang, Wenxuan and Cun, Xiaodong and Wang, Xuan and Zhang, Yong and Shen, Xi and Guo, Yu and Shan, Ying and Wang, Fei},
+        year={2022},
+        eprint={2211.12194},
+}
 </code></pre>
-</div>
-<div class="n-footer">
-</div>
+    </div>
+</section>
+<!--End BibTex citation -->
 
 
-</body>
-</html>
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/vinthony/project-page-template">modification version</a> of <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> from <a href="https://github.com/vinthony">vinthony</a>.
+            You are free to borrow the of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
