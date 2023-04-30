@@ -134,23 +134,6 @@
   </div>
 </section>
 
-
- <!-- <section class="hero">
-  <div class="is-max-desktop">
-    <div class="marquee-wrapper">
-        <div class="marquee-block">
-          <div class="marquee-inner to-left">
-            <span>
-              <div class="marquee-item" >
-                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
-                  <source src="./videos/demo1.mp4" type="video/mp4">
-                </video>
-              </div>
-            </span>
-        </div>
-    </div>
-  </div></div></section> -->
-
 <!-- Paper abstract -->
 <section class="section hero is-light">
   <div class="container is-max-desktop">
@@ -183,7 +166,8 @@
   <div class="hero-body">
     <div class="container">
       <!-- Paper video. -->
-      <h2 class="title is-3"><strong>Video1</strong>: Video Editing</h2>
+      <h2 class="title is-3"><strong>Video1</strong>: Video Editing (audio + single image)</h2>
+      <h5 class="title is-5">Given a source image S, a piece of audio A, and driving video D , we transfer expression from A to S and transfer pose from D to S.</h5>
       <div class="video" style="display:inline">
         <video controls="" loop="" width="24%">
             <source src="./videos/demo1/full_s.mp4" type="video/mp4">
@@ -195,8 +179,6 @@
         <video controls="" loop="" width="24%">
           <source src="./videos/demo1/dpe.mp4" type="video/mp4">
         </video>
-        <!-- <h2 class="title is-4">
-          <div>From left to right: full original video, input image (sadtalker), audio driving (sadtalker), video editing (ours)</div> -->
       </div>
       <div class="video" style="display:inline">
         <video controls="" loop="" width="24%">
@@ -209,8 +191,6 @@
         <video controls="" loop="" width="24%">
           <source src="./videos/demo3/dpe.mp4" type="video/mp4">
         </video>
-        <!-- <h2 class="title is-4">
-          <div>From left to right: full original video, input image (sadtalker), audio driving (sadtalker), video editing (ours)</div> -->
       </div>
       <div class="video" style="display:inline">
         <video controls="" loop="" width="24%">
@@ -223,8 +203,6 @@
         <video controls="" loop="" width="24%">
           <source src="./videos/demo4/dpe.mp4" type="video/mp4">
         </video>
-        <!-- <h2 class="title is-4">
-          <div>From left to right: full original video, input image (sadtalker), audio driving (sadtalker), video editing (ours)</div> -->
       </div>
       <div class="video" style="display:inline">
         <video controls="" loop="" width="24%">
@@ -238,7 +216,7 @@
           <source src="./videos/demo2/dpe.mp4" type="video/mp4">
         </video>
         <h2 class="title is-4">
-          <div>From left to right: full original video, input image (Sadtalker), audio driving (Sadtalker), video editing (Ours). </div>
+          <div>From left to right: full original video, input image (Sadtalker), audio driving result (Sadtalker), video editing result (Ours). </div>
       </div>
     </div>
   </div>
@@ -249,19 +227,16 @@
   <div class="hero-body">
     <div class="container">
       <!-- Paper video. -->
-      <h2 class="title is-3"><strong>Video2</strong>: Pose & Exp Driving (Visual driving)</h2>
+      <h2 class="title is-3"><strong>Video2</strong>: Video Editing (video + single image)</h2>
+      <h5 class="title is-5">Given a source image S, a driving video D1, and another driving video D2, we transfer expression from D1 to S and transfer pose from D2 to S.</h5>
       <div class="video">
-        <!--    <div class="l-page video">-->
         <video controls="" loop="" width="100%">
-            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
             <source src="./videos/demo1.mp4" type="video/mp4">
         </video>
         <video controls="" loop="" width="100%">
-            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
             <source src="./videos/demo2.mp4" type="video/mp4">
         </video>
         <video controls="" loop="" width="100%">
-            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
             <source src="./videos/demo3.mp4" type="video/mp4">
         </video>
         <div class="videocaption">
@@ -277,7 +252,82 @@
     </div>
   </div>
 </section>
-
+<section class="hero">
+  <div class="is-max-desktop">
+    <div class="marquee-wrapper">
+        <div class="marquee-block">
+          <div class="marquee-inner to-left">
+            <span>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/demo1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/demo2.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/demo3.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/demo1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/demo2.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/demo3.mp4" type="video/mp4">
+                </video>
+              </div>
+            </span>
+            <span>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/demo1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/demo2.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/demo3.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/demo1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/demo2.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/demo3.mp4" type="video/mp4">
+                </video>
+              </div>
+            </span>
+        </div>
+    </div>
+  </div></div></section>
 
 <section class="hero is-small is-light">
   <div class="hero-body">
