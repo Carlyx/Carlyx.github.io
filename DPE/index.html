@@ -166,57 +166,27 @@
   <div class="hero-body">
     <div class="container">
       <!-- Paper video. -->
-      <h2 class="title is-3"><strong>Video1</strong>: Video Editing (audio + single image)</h2>
-      <h5 class="title is-5">Given a source image S, a piece of audio A, and driving video D , we transfer expression from A to S and transfer pose from D to S.</h5>
+      <h2 class="title is-3"><strong>Video1</strong>: Audio-driven Video Editing</h2>
+      <h5 class="title is-5">Given a source video S and a piece of audio A, we transfer expression from A to S.</h5>
       <div class="video" style="display:inline">
-        <video controls="" loop="" width="24%">
+        <video controls="" loop="" width="35%">
             <source src="./videos/demo1/full_s.mp4" type="video/mp4">
         </video>
-        <img src="./videos/demo1/s.jpg" width="24%">
-        <video controls="" loop="" width="24%">
-          <source src="./videos/demo1/sadtalker.mp4" type="video/mp4">
-        </video>
-        <video controls="" loop="" width="24%">
+        <embed width="25%" src="./videos/demo1/1.wav">
+        <video controls="" loop="" width="35%">
           <source src="./videos/demo1/dpe.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video" style="display:inline">
-        <video controls="" loop="" width="24%">
+        <video controls="" loop="" width="35%">
             <source src="./videos/demo3/full_s.mp4" type="video/mp4">
         </video>
-        <img src="./videos/demo3/s.jpg" width="24%">
-        <video controls="" loop="" width="24%">
-          <source src="./videos/demo3/sadtalker.mp4" type="video/mp4">
-        </video>
-        <video controls="" loop="" width="24%">
+        <embed width="25%" src="./videos/demo3/2.wav">
+        <video controls="" loop="" width="35%">
           <source src="./videos/demo3/dpe.mp4" type="video/mp4">
         </video>
-      </div>
-      <div class="video" style="display:inline">
-        <video controls="" loop="" width="24%">
-            <source src="./videos/demo4/full_s.mp4" type="video/mp4">
-        </video>
-        <img src="./videos/demo4/s.jpg" width="24%">
-        <video controls="" loop="" width="24%">
-          <source src="./videos/demo4/sadtalker.mp4" type="video/mp4">
-        </video>
-        <video controls="" loop="" width="24%">
-          <source src="./videos/demo4/dpe.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="video" style="display:inline">
-        <video controls="" loop="" width="24%">
-            <source src="./videos/demo2/full_s.mp4" type="video/mp4">
-        </video>
-        <img src="./videos/demo2/s.jpg" width="24%">
-        <video controls="" loop="" width="24%">
-          <source src="./videos/demo2/sadtalker.mp4" type="video/mp4">
-        </video>
-        <video controls="" loop="" width="24%">
-          <source src="./videos/demo2/dpe.mp4" type="video/mp4">
-        </video>
         <h2 class="title is-4">
-          <div>From left to right: full original video, input image (Sadtalker), audio driving result (Sadtalker), video editing result (Ours). </div>
+          <div>From left to right: source video, audio, video editing result. (We implement audio driving part with the help of SadTalker.)</div>
       </div>
     </div>
   </div>
