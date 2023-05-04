@@ -251,13 +251,11 @@ a:hover:after{
   margin: 20px auto;
   background:#f5f5f5;
   padding: 10px 0;
-  animation-play-state: paused;
 }
 .marquee-inner{
   display: block;
   width: 200%;
   position: absolute;
-  animation-play-state: paused;
 }
 
 
@@ -272,7 +270,7 @@ a:hover:after{
 }
 
 .marquee-inner.to-left:hover {
-  animation-play-state: paused;
+  animation-play-state: paused !important;
 }
 
 
