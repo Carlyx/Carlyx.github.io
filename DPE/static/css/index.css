@@ -279,9 +279,7 @@ a:hover:after{
 .marquee-inner.to-right{
   animation: marqueeRight 30s linear infinite;
 }
-.marquee-inner.hover {
-  animation-play-state: paused;
-}
+
 .marquee-item{
   width: 700px;
   height: 300px;
