@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="UniMo: Unifying 2D Video and 3D Human Motion with an Autoregressive Framework">
+  <meta property="og:title" content="UniMo: Unifying 2D Video and 3D Human Motion with an Autoregressive Framework"/>
+  <meta property="og:description" content="UniMo: Unifying 2D Video and 3D Human Motion with an Autoregressive Framework"/>
+  <meta property="og:url" content="https://carlyx.github.io/UniMo/"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/images/carousel1.jpg" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="UniMo: Unifying 2D Video and 3D Human Motion with an Autoregressive Framework">
+  <meta name="twitter:description" content="UniMo: Unifying 2D Video and 3D Human Motion with an Autoregressive Framework">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/carousel1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>DPE</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h3 class="title is-1 publication-title">
+              UniMo: Unifying 2D Video and 3D Human Motion with an Autoregressive Framework
+            </h3>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="http://carlyx.github.io/" target="_blank">Youxin Pang</a><sup>1,2,3</sup>
+              </span>
+                <span class="author-block">
+                  <a href="https://yzhang2016.github.io/" target="_blank">Yong Zhang</a><sup>3</sup>
+                </span>
+                  <span class="author-block">
+                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=PMR9cooAAAAJ" target="_blank">Weize Quan</a><sup>1,2</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://sites.google.com/site/yanbofan0124/" target="_blank">Yanbo Fan</a><sup>3</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://vinthony.github.io/academic/" target="_blank">Xiaodong Cun</a><sup>3</sup>
+                  </span>
+                  <br>
+                  <span class="author-block">
+                    <a href="https://scholar.google.com/citations?user=4oXBp9UAAAAJ&hl=zh-CN" target="_blank">Ying Shan</a><sup>3</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://sites.google.com/site/yandongming/" target="_blank">Dong-ming Yan</a><sup>1,2</sup>
+                  </span>
+                  </div>
+                  <br>
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">
+                      <sup>1</sup> Tsinghua University &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <sup>2</sup> Meituan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <!-- <br>CVPR 2023</span> -->
+                  </div>
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                      <span class="link-block">
+                        <a href="" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/Carlyx/DPE" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span>🤗 Demo (Hugging Face Space)</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                  <a href="" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span>🧿 Demo (Colab)</span>
+                </a>
+              </span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We propose UniMo, an innovative autoregressive model for joint modeling of 2D human videos and 3D human motions within a unified framework, enabling simultaneous generation and understanding of these two modalities for the first time. Current methods predominantly focus on generating one modality given another as the condition or integrating either of them with other modalities such as text and audio. Unifying 2D videos and 3D motions for simultaneous optimization and generation remains largely unexplored, presenting significant challenges due to their substantial structural and distributional differences. Inspired by the LLM's ability to unify different modalities, our method models videos and 3D motions as a unified tokens sequence, utilizing separate embedding layers to mitigate distribution gaps. Additionally, we devise a sequence modeling strategy that integrates two distinct tasks within a single framework, proving the effectiveness of unified modeling. Moreover, to efficiently align with visual tokens and preserve 3D spatial information, we design a novel 3D motion tokenizer with a temporal expansion strategy, using a single VQ-VAE to produce quantized motion tokens. It features multiple expert decoders that handle body shapes, translation, global orientation, and body poses for reliable 3D motion reconstruction. Extensive experiments demonstrate that our method simultaneously generates corresponding videos and motions while performing accurate motion capture. This work taps into the capacity of LLMs to fuse diverse data types, paving the way for integrating human-centric information into existing models and potentially enabling multimodal, controllable joint modeling of humans, objects, and scenes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video1</strong>: Audio-driven Video Editing</h2>
+      <h5 class="title is-5">Given a source video S and a piece of audio A, we transfer expression from A to S.</h5>
+      <div class="video" style="display:inline">
+        <video controls="" loop="" width="35%">
+            <source src="./videos/demo1/full_s.mp4" type="video/mp4">
+        </video>
+        <!-- <embed width="25%" src="./videos/demo1/1.wav"> -->
+          <audio controls="controls">
+            <source src="./videos/demo1/1.wav" type="audio/mp3" />
+          </audio>
+        <video controls="" loop="" width="35%">
+          <source src="./videos/demo1/dpe.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video" style="display:inline">
+        <video controls="" loop="" width="35%">
+            <source src="./videos/demo3/full_s.mp4" type="video/mp4">
+        </video>
+        <!-- <embed width="25%" src="./videos/demo3/2.wav"> -->
+          <audio controls="controls">
+            <source src="./videos/demo3/2.wav" type="audio/mp3" />
+          </audio>
+        <video controls="" loop="" width="35%">
+          <source src="./videos/demo3/dpe.mp4" type="video/mp4">
+        </video>
+        <h2 class="title is-4">
+          <div>From left to right: source video, audio, video editing result. (We implement audio driving part with the help of SadTalker.)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video2</strong>: Visual-driven Video Editing</h2>
+<h5 class="title is-5">Given a source video S, a driving video D, we transfer expression from D to S only.</h5>
+      <div class="video">
+        <!--    <div class="l-page video">-->
+        <video controls="" loop="" width="100%">
+            <!-- t=0.001 is a hack to make iPhone show video thumbnail -->
+            <source src="./videos/video4_au1.mp4" type="video/mp4">
+        </video>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="hero">
+  <div class="is-max-desktop">
+    <div class="marquee-wrapper">
+        <div class="marquee-block">
+          <div class="marquee-inner to-left">
+            <span>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/video4_au1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/video1_au1.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/video3_au1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/video4_au1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/video1_au1.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/video3_au1.mp4" type="video/mp4">
+                </video>
+              </div>
+            </span>
+            <span>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/video4_au1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/video1_au1.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/video3_au1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/video4_au1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/video1_au1.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/video3_au1.mp4" type="video/mp4">
+                </video>
+              </div>
+            </span>
+        </div>
+    </div>
+  </div></div></section>
+
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3"><strong>Video3</strong>: Video-driven image animation.</h2>
+      <h5 class="title is-5">Given a source image S, a driving video D1, and another driving video D2, we transfer expression from D1 to S and transfer pose from D2 to S.</h5>
+      <div class="video">
+        <video controls="" loop="" width="100%">
+            <source src="./videos/demo3.mp4" type="video/mp4">
+        </video>
+        <div class="videocaption">
+          <div>
+              <strong>
+                  Video:
+              </strong>
+              The input is a single image, and the pose and expression information come from different sources.
+              Some videos are selected from <a href="https://www.colossyan.com/">here</a>
+          </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="hero">
+  <div class="is-max-desktop">
+    <div class="marquee-wrapper">
+        <div class="marquee-block">
+          <div class="marquee-inner to-left">
+            <span>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/demo1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/demo2.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/demo3.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/demo1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/demo2.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/demo3.mp4" type="video/mp4">
+                </video>
+              </div>
+            </span>
+            <span>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/demo1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/demo2.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/demo3.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item" >
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <!-- Your video file here -->
+                  <source src="./videos/demo1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                  <source src="./videos/demo2.mp4" type="video/mp4">  
+                  </video>
+              </div>
+              <div class="marquee-item">
+                <video onloadstart="this.playbackRate = 0.75;" poster="" id="video1" autoplay muted loop playsinline height="100%">
+                <source src="./videos/demo3.mp4" type="video/mp4">
+                </video>
+              </div>
+            </span>
+        </div>
+    </div>
+  </div></div></section>
+
+  <section class="hero is-small is-light">
+    <div class="hero-body">
+      <div class="container">
+        <!-- Paper video. -->
+        <h2 class="title is-3"><strong>Video4</strong>: Audio-driven image animation.</h2>
+        <h5 class="title is-5">Given a source image S, a driving video D, and a piece of audio A, we transfer expression from A to S and transfer pose from D to S.</h5>
+        <div class="video">
+          <video controls="" loop="" width="100%">
+              <source src="./videos/demo4_1.mp4" type="video/mp4">
+          </video>
+          <video controls="" loop="" width="100%">
+            <source src="./videos/demo5_1.mp4" type="video/mp4">
+        </video>
+      </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3"><strong>Video5</strong>: Pose Driving</h2>
+      <div class="video">
+        <video controls="" loop="" width="100%">
+            <source src="./videos/pose1.mp4" type="video/mp4">
+        </video>
+        <video controls="" loop="" width="100%">
+            <source src="./videos/pose2.mp4" type="video/mp4">
+        </video>
+    </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Teaser video-->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Pipeline</h2>
+    <div class="l-article">
+      <img src="./images/teaser.jpg" width="100%">
+    </div>
+    <div class="l-article">
+      <img src="./images/pipeline.jpg" width="100%">
+    </div>
+  </div>
+</section>
+<!-- End teaser video -->
+
+<!-- <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{pang2023dpe,
+        title={UniMo: Unifying 2D Video and 3D Human Motion with an Autoregressive Framework},
+        author={Pang, Youxin and Zhang, Yong and Quan, Weize and Fan, Yanbo and Cun, Xiaodong and Shan, Ying and Yan, Dong-ming},
+        journal={arXiv preprint arXiv:2301.06281},
+        year={2023}
+      }
+</code></pre>
+    </div>
+</section> -->
+
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/vinthony/project-page-template">modification version</a> of <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> from <a href="https://github.com/vinthony">vinthony</a>.
+            You are free to borrow the of this website, we just ask that you link back to this page in the footer. <br>
+            Some source videos in this website are selected from <a href="https://www.colossyan.com/">here</a>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
