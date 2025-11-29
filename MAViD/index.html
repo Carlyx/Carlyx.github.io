@@ -1,189 +1,1552 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="description" content="MAViD: A Multimodal Framework for Audio-Visual Dialogue Understanding and Generation">
-  <meta property="og:title" content="MAViD: A Multimodal Framework for Audio-Visual Dialogue Understanding and Generation"/>
-  <meta property="og:description" content="MAViD: A Multimodal Framework for Audio-Visual Dialogue Understanding and Generation"/>
-  <meta property="og:url" content="https://carlyx.github.io/MAViD/"/>
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/images/carousel1.jpg" />
-  <meta property="og:image:width" content="1200"/>
-  <meta property="og:image:height" content="630"/>
+<html lang="en">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>MAViD</title>
+    <meta name="description" content="MAViD: A Multimodal Framework for Audio-Visual Dialogue Understanding and Generation">
+    <meta name="keywords" content="Audio-Visual Dialogue Framework, AR and Diffusion, Understanding and Generation">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#EDE8F5">
+    <meta property="og:image" content="">
+    <link rel="stylesheet" href="./assets/index.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css'>
+    <link rel="shortcut icon" href="./assets/logo.jpg" type="image/x-icon">
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-stretch: 100%;
+            font-display: block;
+            font-weight: 300 700;
+            src: url('./assets/roboto.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        @font-face {
+          font-family: 'DancingScript';
+          src: url('./assets/DancingScript-Bold.ttf') format('truetype');
+        }
+
+        @font-face {
+          font-family: 'Caveat';
+          src: url('./assets/Caveat-Medium.ttf') format('truetype');
+        }
+
+        @font-face {
+          font-family: 'Alegreya';
+          src: url('./assets/Alegreya-Regular.ttf') format('truetype');
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        video {
+            background-color: #000000;
+            aspect-ratio: 16 / 9;
+        }
+
+        section.portrait video {
+            background-color: #000000;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+        section.multi_ip video {
+            background-color: #000000;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+
+        section.portrait .prompt-wrap.full-screen-wrap video {
+            object-fit: cover;
+        }
+
+        section.portrait .flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        section.portrait2 .flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        section.portrait .flex > div {
+            flex: 0 0 calc((100% - 5 * 10px) / 6);
+        }
+        section.portrait2 .flex > div {
+            flex: 0 0 calc((100% - 1 * 10px) / 2);
+        }
+
+        section.portrait .prompt {
+            font-size: 10px;
+        }
+        section.portrait2 .prompt {
+            font-size: 12px;
+        }
+
+        section.portrait .flex-row {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        section.portrait2 .flex-row {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            section.portrait .flex > div {
+                flex: 0 0 calc((100% - 1 * 10px) / 2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            section.portrait2 .flex > div {
+                flex: 0 0 calc((100% - 0 * 10px) / 1);
+            }
+        }
+
+        /* Ensure prompt adjusts for portrait mode */
+        .portrait .prompt {
+            position: absolute;  /* Allow positioning relative to the container */
+            bottom: 5%;          /* Adjust this to control the vertical placement of the prompt */
+            left: 50%;           /* Center horizontally */
+            transform: translateX(-50%); /* Offset by 50% of its width to truly center */
+            max-width: 80%;
+            text-align: center;  /* Center the text inside the prompt */
+            color: white;        /* Optional, if you want the text to stand out */
+            font-size: 1.2em;    /* Optional, adjust the text size */
+        }
+
+        .portrait2 .prompt{
+            position: absolute;  /* Allow positioning relative to the container */
+            bottom: 5%;          /* Adjust this to control the vertical placement of the prompt */
+            left: 50%;           /* Center horizontally */
+            transform: translateX(-50%); /* Offset by 50% of its width to truly center */
+            max-width: 80%;
+            text-align: center;  /* Center the text inside the prompt */
+            color: white;        /* Optional, if you want the text to stand out */
+            font-size: 1.2em;    /* Optional, adjust the text size */
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: "Roboto", sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        #intro {
+            padding: 100px 0 0px 0;
+            justify-content: center; /* Center content vertically */
+            text-align: center; /* Center text alignment */
+            /* background-image: url('./assets/background.png'); */
+            background-size: cover; /* Cover the entire container */
+            background-position: center; /* Center the background image */
+            color: #ffffff; /* Ensure text color is readable */
+            position: relative; /* 新增：作为视频背景的定位容器 */
+            overflow: hidden; /* 新增：隐藏超出容器的视频部分 */
+            min-height: 100vh; /* 新增：确保有足够高度显示内容 */
+        }
+
+        /* 新增：视频背景样式 */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* 置于内容下方 */
+        }
+        
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 保持比例填充容器 */
+            opacity: 0.3; /* 适当降低透明度，增强文字可读性 */
+        }
+        
+        #intro .content {
+            position: relative;
+            z-index: 1; /* 确保内容显示在视频上方 */
+        }
+
+        #intro h1 {
+            font-size: 70px;
+            font-weight: 300;
+            margin: 20px 0;
+        } 
+
+        #intro h2 {
+            margin: 20px 0 40px 0;
+            font-weight: 300;
+            color: #ffffff
+        }
+
+        #intro h2 strong {
+            color: #fff;
+        }
+
+        .authors {
+            font-size: 16px;
+            font-weight: 500;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 25px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .author-block {
+            display: inline-block;
+            margin: 0 10px 0 10px;
+        }
+
+        .author-block a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .author-block a:hover {
+            color: #fff;
+        }
+
+        .author-affiliation {
+            font-size: 16px;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 60px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .author-affiliation .author-block {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        section {
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 0 10%;
+        }
+
+        .button {
+            background-color: #ccc;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: background-color 0.5s;
+            text-decoration: none;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .button:hover {
+            background-color: #fff;
+        }
+
+        .bibtex-section {
+            background-color: #111;
+            padding: 40px 10%;
+            text-align: center;
+            margin-top: 60px;
+            color: #ccc;
+        }
+
+        .bibtex-section h3 {
+            font-size: 24px;
+            font-weight: 400;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .bibtex-code {
+            background-color: #222;
+            color: #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            display: inline-block;
+            font-family: monospace;
+            max-width: 800px;
+            overflow-x: auto;
+        }
+
+        section {
+            margin-top: 80px;
+        }
+        section:first-of-type {
+            margin-top: 0;
+        }
+
+        .title {
+            background-color: #000;
+            position: sticky;
+            top: 0;
+            padding: 20px 10%;
+            font-size: 20px;
+            font-weight: 600;
+            z-index: 1000;
+            min-height: 60px;
+            box-sizing: border-box;
+        }
+
+        .description {
+            padding: 0 10% 20px 10%;
+            color: #999;
+            line-height: 25px;
+            font-weight: 300;
+        }
+        .description-strong {
+            color: #ffffffa8;
+            font-weight: 500;
+        }
+
+        .prompt-strong {
+            color: #fff;
+            font-weight: 500;
+            font-size: 1.2em;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .flex-row {
+            display: flex;
+            column-gap: 5px;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            padding: 0 5px 5px 5px;
+            
+        }
+
+        .flex-row > div {
+            flex-grow: 1;
+            flex-basis: 0;
+            position: relative;
+        }
+
+        .flex > div {
+            /* width: calc(100% / 3 - 5px * 2 / 3); */
+            width: calc(100% / 4 - 5px * 3 / 4);
+            margin-top: 2.5px;
+            margin-bottom: 2.5px;
+            position: relative;
+        }
+
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 5px;
+        }
+
+        .prompt-wrap {
+            position: relative;
+        }
+
+        .flex-2 {
+            justify-content: center;
+            column-gap: 5px;
+        }
+        .flex-2 > div {
+            width: calc(100% / 2 - 5px / 2);
+            min-width: calc(100% / 3 - 5px * 2 / 3);
+            max-width: calc(100vh - 200px);
+        }
+
+        video, img {
+            width: 100%;
+        }
+
+        .loading-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .loading-text {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .loading-icon {
+            font-size: 48px;
+        }
+
+        .prompt {
+            max-width: calc(100% - 20px);
+            position: absolute;
+            background: rgba(0,0,0,0.5);
+            color: rgba(255,255,255,0.9);
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+            top: 10px;
+            left: 10px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+            box-sizing: border-box;
+        }
+
+        .flex-very-compact .full-screen-button {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            border-radius: 0;
+        }
+
+        .chinese {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: bold;
+            color: #d18585;
+            font-size: 1.1em;
+        }
+
+        @media (hover: hover) {
+            .prompt-wrap:hover .prompt,
+            .full-screen-wrap:hover .full-screen-button {
+                opacity: 1;
+                pointer-events: all;
+            }
+            #contributors a:hover {
+                background-color: #222;
+            }
+        }
+
+        @media (hover: none) {
+            #contributors a {
+                pointer-events: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .flex-dynamic > div {
+                width: calc(100% / 2 - 5px / 2);
+            }
+        }
+
+        @media (max-width: 640px) {
+            #intro h1 {
+                font-size: 50px;
+            }
+            #intro h2 {
+                font-size: 20px;
+            }
+            .ruler {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 512px) {
+            .flex-dynamic > div,
+            .flex-dynamic-1 > div {
+                width: 100%;
+            }
+
+            .content {
+                padding: 0 12px;
+            }
+
+            .description {
+                padding: 0 12px 20px 12px;
+            }
+
+            .title {
+                padding: 20px 12px;
+            }
+
+            .ruler-tight {
+                font-size: 6px;
+                column-gap: 0;
+            }
+
+            .title-long {
+                font-size: 16px;
+            }
+
+        }
+
+        .margin-top {
+            margin-top: 50px;
+        }
+
+        .ruler {
+            text-align: center;
+            position: sticky;
+            top: 60px;
+            z-index: 999;
+            background-color: #000;
+            color: #999;
+            padding: 5px 0;
+        }
+
+        .ruler > div {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .selected {
+            box-shadow: 0 0 0 5px #fff;
+        }
+
+        #title-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        #title-icon {
+          height: 8em;
+          width: auto;
+          margin-right: 0px;
+          vertical-align: middle;
+        }
+
+        .title-art {
+          font-family: 'DancingScript', sans-serif;
+        }
+
+        .title-art2 {
+          font-family: 'Caveat', sans-serif;
+        }
+
+        .title-art3 {
+          font-family: 'Alegreya', sans-serif;
+        }
 
 
-  <meta name="twitter:title" content="MAViD: A Multimodal Framework for Audio-Visual Dialogue Understanding and Generation">
-  <meta name="twitter:description" content="MAViD: A Multimodal Framework for Audio-Visual Dialogue Understanding and Generation">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/images/carousel1.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- Keywords for your paper to be indexed by-->
-  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+        header {
+            position: relative;
+            background: none;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            width: 100%;
+            /* Maintain 16:9 aspect ratio for 1080p video */
+            aspect-ratio: 16 / 9;
+            min-height: 340px;
+        }
+        @supports not (aspect-ratio: 16/9) {
+            header {
+                height: 56.25vw; /* fallback for browsers without aspect-ratio */
+                min-height: 340px;
+                max-height: 600px;
+            }
+        }
+        .header-bg-video {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 1;
+            pointer-events: none;
+        }
+        .header-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.3) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+        header > *:not(.header-bg-video):not(.header-overlay) {
+            position: relative;
+            z-index: 3;
+        }
+        .header-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
 
-  <title>MAViD</title>
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-  rel="stylesheet">
+        h2 {
+            font-size: 2.5em;
+            color: rgb(255, 255, 255);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
 
-  <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="static/css/index.css">
+        #video-wrapper {
+          border-radius: 50px;
+          max-width: 720px;
+          padding-bottom: 40%; 
+          margin: 0 auto;
+          background: #000000;
+        }
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script src="static/js/bulma-carousel.min.js"></script>
-  <script src="static/js/bulma-slider.min.js"></script>
-  <script src="static/js/index.js"></script>
+        .ethics-section {
+            padding: 100px 10%;
+            text-align: center;
+            margin-top: 60px;
+            color: #ccc;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .acknowledgements-section {
+            padding: 100px 10%;
+            text-align: center;
+            margin-top: 60px;
+            color: #ccc;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+            width: 100%; 
+            gap: 5px;
+        }
+        .video-container video {
+            width: 100%;
+            max-width: 1200px;
+            max-height: 750px;
+            height: auto;
+            display: block; /* 移除视频下方的默认空隙 */
+        }
+        .units-rule {
+            display: grid;
+            grid-auto-flow: column;
+            justify-content: center;
+            align-items: center;
+            column-gap: 0.75rem;
+        }
+        .units-rule i {
+            display: block;
+            width: 1px;
+            height: 1em;
+            background: currentColor;
+            opacity: 0.25;             /* 细且淡的竖线 */
+        }
+
+                /* --- Case Title & Prompt Styling --- */
+        .comparison-text-box {
+            text-align: center;
+            /* 增加下方间距，与视频拉开距离 */
+            margin-bottom: 45px; 
+            padding: 0 10%;
+            position: relative;
+        }
+
+        .case-title {
+            /* 使用艺术字体 */
+            font-family: 'DancingScript', cursive; 
+            font-size: 2.8em;
+            font-weight: 700;
+            /* 设置一个渐变色或独特的颜色，这里用金色渐变 */
+            background: linear-gradient(45deg, #FFD700, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .comp-prompt-box {
+            /* 给 Prompt 一个磨砂玻璃质感的背景框 */
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px 25px;
+            display: inline-block;
+            max-width: 800px;
+            backdrop-filter: blur(5px);
+        }
+
+        .comp-prompt-label {
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            color: #aaa;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block; /* 独占一行 */
+        }
+
+        .comp-prompt-content {
+            font-family: 'Alegreya', serif; /* 或者用 'Roboto' */
+            font-style: italic;
+            font-size: 1.3em;
+            color: #eee;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
-
-
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h3 class="title is-1 publication-title">
-              MAViD: A Multimodal Framework for Audio-Visual Dialogue Understanding and Generation
-            </h3>
-            <div class="is-size-5 publication-authors">
-              <!-- Paper authors -->
-              <span class="author-block">
-                <a href="http://carlyx.github.io/" target="_blank">Youxin Pang</a><sup>1,2,*</sup>
-              </span>
-              <span class="author-block">
-                <a href="" target="_blank">Jiajun Liu</a><sup>2,*</sup>
-              </span>
-              <span class="author-block">
-                <a href="" target="_blank">Lingfeng Tan</a><sup>2,*</sup>
-              </span>
-                <span class="author-block">
-                  <a href="https://yzhang2016.github.io/" target="_blank">Yong Zhang</a><sup>2,&#9993;</sup>
-                </span>
-                  <span class="author-block">
-                    <a href="" target="_blank">Feng Gao</a><sup>2</sup>
-                  </span>
-                  <br>
-                  <span class="author-block">
-                    <a href="" target="_blank">Xiang Deng</a><sup>1,2</sup>
-                  </span>
-                  <span class="author-block">
-                    <a href="" target="_blank">Zhuoliang Kang</a><sup>2</sup>
-                  </span>
-                  <span class="author-block">
-                    <a href="" target="_blank">Xiaoming Wei</a><sup>2</sup>
-                  </span>
-                  <span class="author-block">
-                    <a href="https://scholar.google.com/citations?user=ogXIdlYAAAAJ&hl=zh-CN" target="_blank">Yebin Liu</a><sup>1,&#9993;</sup>
-                  </span>
-                  </div>
-                  <br>
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">
-                      <sup>1</sup> Tsinghua University &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <sup>2</sup> Meituan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <!-- <br>CVPR 2023</span> -->
-                  </div>
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">
-                      <sup>*</sup> Equal Contribution &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <sup>&#9993;</sup> Corresponding Authors &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <!-- <br>CVPR 2023</span> -->
-                  </div>
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                      <span class="link-block">
-                        <a href="" target="_blank"
-                        class="external-link button is-normal is-rounded is-dark">
-                        <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
-                        </span>
-                        <span>Paper</span>
-                      </a>
-                    </span>
-
-                  <!-- Github link -->
-                  <span class="link-block">
-                    <a href="https://github.com/Carlyx/MAViD" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span>
-
-                <span class="link-block">
-                  <a href="" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span>🤗 Demo (Hugging Face Space)</span>
-                </a>
-              </span>
-
-              <span class="link-block">
-                  <a href="" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span>🧿 Demo (Colab)</span>
-                </a>
-              </span>
-
-            </div>
-          </div>
+    <section id="intro">
+        <div class="video-background">
+            <video autoplay playsinline muted loop>
+                <source src="./assets/background/demo.mp4" type="video/mp4">
+                Demo Video
+            </video>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Paper abstract -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            We propose MAViD, a novel Multimodal framework for Audio-Visual Dialogue understanding and generation.Existing approaches primarily focus on non-interactive systems and are limited to producing constrained and unnatural human speech.The primary challenge of this task lies in effectively integrating understanding and generation capabilities, as well as achieving seamless multimodal audio-video fusion.To solve these problems, we propose a Conductor–Creator architecture that divides the dialogue system into two primary components.The Conductor is tasked with understanding, reasoning, and generating instructions by breaking them down into motion and speech components, thereby enabling fine-grained control over interactions.The Creator then delivers interactive responses based on these instructions.Furthermore, to address the difficulty of generating long videos with consistent identity, timbre, and tone using dual DiT structures, the Creator adopts a structure that combines autoregressive (AR) and diffusion models. The AR model is responsible for audio generation, while the diffusion model ensures high-quality video generation.Additionally, we propose a novel fusion module to enhance connections between contextually consecutive clips and modalities, enabling synchronized long-duration audio-visual content generation.Extensive experiments demonstrate that our framework can generate vivid and contextually coherent long-duration dialogue interactions and accurately interpret users' multimodal queries.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End paper abstract -->
-
-
-
-  <footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
         <div class="content">
+            <div id="title-container">
+              <!-- <img id="title-icon"  alt="Icon"> -->
+              <h1><strong> </strong></h1>
+            </div>
+            <h1><strong><br></br>MAViD: A Multimodal Framework for Audio-Visual Dialogue Understanding and Generation</strong></h1>
+            <div class="authors">
+                <!-- <span class="author-block" style="font-weight: bold;">Anonymous Authors</span> -->
+                <span class="author-block"><a href="https://carlyx.github.io/">Youxin Pang</a><sup>1,2,*</sup></span>
+                <span class="author-block"><a href="">Jiajun Liu</a><sup>2,*</sup></span>
+                <span class="author-block"><a href="">Lingfeng Tan</a><sup>2,*</sup></span>
+                <span class="author-block"><a href="https://yzhang2016.github.io/">Yong Zhang</a><sup>2,&dagger;</sup></span>
+                <span class="author-block"><a href="">Feng Gao</a><sup>2</sup></span>
+                <span class="author-block"><a href="">Xiang Deng</a><sup>1,2</sup></span>
+                <span class="author-block"><a href="">Zhuoliang Kang</a><sup>2</sup></span>
+                <span class="author-block"><a href="">Xiaoming Wei</a><sup>2</sup></span>
+                <span class="author-block"><a href="https://scholar.google.com/citations?user=ogXIdlYAAAAJ&hl=zh-CN">Yebin Liu</a><sup>1,&dagger;</sup></span>
+                <!-- <span class="author-block"><a href="https://scholar.google.com/citations?user=7Xl6KdkAAAAJ&">Yebin Liu</a><sup>&sect;</sup></span> -->
+            </div>
 
-          <p>
-            This page was built using the <a href="https://github.com/vinthony/project-page-template">modification version</a> of <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> from <a href="https://github.com/vinthony">vinthony</a>.
-            You are free to borrow the of this website, we just ask that you link back to this page in the footer. <br>
-            Some source videos in this website are selected from <a href="https://www.colossyan.com/">here</a>
-          </p>
+            <!-- Added the affiliations section -->
+             <div class="author-affiliation">
+                <p>
+                    <span>
+                        <sup>1</sup> Tsinghua University
+                        <sup>2</sup> Meituan
+                        <!-- <sup>&sect;</sup> Corresponding author -->
+                    </span>
+                </p>
+            </div>
 
+            <div class="author-affiliation">
+                <p>
+                    <span>
+                        <sup>*</sup> Equal contribution, 
+                        <sup>&dagger;</sup> Corresponding authors
+                        <!-- <sup>&sect;</sup> Corresponding author -->
+                    </span>
+                </p>
+            </div>
+
+            <a class="button" href="https://carlyx.github.io/MAViD/" target="_blank" rel="noopener noreferrer">
+               Research Paper (Coming Soon)
+            </a>
+            <!-- <a class="button" href="https://github.com/bridgedit-t2sv/bridgedit-t2sv.github.io" target="_blank" rel="noopener noreferrer">
+                <i class="fa fa-github" style="font-size:17px"></i>
+                Code
+            </a> -->
+            <!-- <a class="button" href="https://bridgedit-t2sv.github.io/" target="_blank" rel="noopener noreferrer">
+                <i class="fa fa-github" style="font-size:17px"></i>
+                Models (Coming Soon)
+            </a> -->
         </div>
-      </div>
+    </section>
+
+    <div class="container" style="margin-top: 50px; ">
+        <p class="title-art1" style="font-family: 'Alegreya';font-size: 1.6em;text-align: center;">Abstract</p>
+        <p class="description" style="font-size: 1.0em;text-align: left;">
+            We propose MAViD, a novel <strong class="description-strong">M</strong>ultimodal framework for <strong class="description-strong">A</strong>udio-<strong class="description-strong">Vi</strong>sual <strong class="description-strong">D</strong>ialogue understanding and generation.
+            Existing approaches primarily focus on non-interactive systems and are limited to producing constrained and unnatural human speech.
+            The primary challenge of this task lies in effectively integrating understanding and generation capabilities, as well as achieving seamless multimodal audio-video fusion.
+            To solve these problems, we propose a Conductor–Creator architecture that divides the dialogue system into two primary components.
+            The Conductor is tasked with understanding, reasoning, and generating instructions by breaking them down into motion and speech components, thereby enabling fine-grained control over interactions.
+            The Creator then delivers interactive responses based on these instructions.
+            Furthermore, to address the difficulty of generating long videos with consistent identity, timbre, and tone using dual DiT structures, the Creator adopts a structure that combines autoregressive (AR) and diffusion models.
+            The AR model is responsible for audio generation, while the diffusion model ensures high-quality video generation.
+            Additionally, we propose a novel fusion module to enhance connections between contextually consecutive clips and modalities, enabling synchronized long-duration audio-visual content generation.
+            Extensive experiments demonstrate that our framework can generate vivid and contextually coherent long-duration dialogue interactions and accurately interpret users' multimodal queries.
+        </p>
     </div>
-  </div>
-</footer>
+    
 
-<!-- Statcounter tracking code -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+    <section id="video">
+        <div class="title" style="font-family: 'Alegreya'; font-size: 1.6em;">
+          Multi-Turn Dialogue
+        </div>
+        <div class="description">
+            <em><strong>Please turn on the sound for watching. </strong></em>
+        </div>
+    <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+        <div style="background-color: #1d0e4b; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                    <h3 style="margin: 0; color: #f7f3f3; font-size: 1.2em;">
+                        Dialogue 1
+                    </h3>
+        </div>
+        <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+            <!-- 1. 顶部大标题 Caption -->
+            <div style="background-color: #155098; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                <h3 style="margin: 0; color: #f7f3f3; font-size: 0.8em;">
+                    Round 1
+                </h3>
+            </div>
 
-    <!-- End of Statcounter Code -->
+            <div style="display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start;">
+                <div class="input-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Input (Multimodal Query)
+                    </div>
+                    <!-- 外框包裹 3 行内容 -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+                        <!-- Row 1: Audio -->
+                        <div style="padding: 10px; background-color: #24012b; border-bottom: 1px solid #030000; display: flex; align-items: center; gap: 8px;">
+                            <div>
+                                    <strong class="prompt-strong">Audio Query:</strong>
+                            </div>
+                            <audio controls style="width: 100%; margin-top: 5px;">
+                                <source src="./assets/multi_turn/case2/turn1/query.mp3" type="audio/wav">
+                            </audio>
+                        </div>
+                        <!-- Row 2: Video (Muted) -->
+                        <div style="position: relative; width: 100%; display: flex; flex-direction: column; border-bottom: 1px solid #ccc;">
+                            <div style="padding: 8px 10px; background-color: #83059d; border-bottom: 1px solid #070000; font-weight: bold; color: #f7f4f4; font-size: 0.95em;">
+                                Video Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <video playsinline loop controls muted
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case2/turn1/query_vid.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- Row 3: Image -->
+                        <!-- <div style="position: relative; width: 100%; display: flex; flex-direction: column;">
+                            <div style="padding: 8px 10px; background-color: #fff; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95em;">
+                                Image Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <img src="./assets/multi_turn/case2/turn1/ref.png" 
+                                onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
+                                style="width: 100%; display: none; object-fit: cover;" 
+                                alt="Image Query" />
+                        </div> -->
+                    </div>
+                </div>
+                <!-- ==========================================
+                    【第 2 列】输出结果 (Result Video)
+                    宽度 50%
+                    ========================================== -->
+                <div class="output-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Generated Result
+                    </div>
+                    <!-- 这里加了 sticky 属性，如果左边很长，用户下滑时，右边的视频会“吸附”在顶部，不会消失 -->
+                    <div style="border: 2px solid #6a0dad; border-radius: 8px; overflow: hidden; position: sticky; top: 20px;">
+                        <div style="position: relative; width: 100%;">
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <!-- 结果视频 -->
+                            <video playsinline loop controls 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case2/turn1/res.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- <div class="prompt" style="padding: 15px; background-color: #fdfaff; border-top: 1px solid #eee;">
+                            <strong class="prompt-strong" style="color: #6a0dad;">Model Response:</strong> 
+                            <br>
+                            This is the final generated video response based on the audio, video, and image inputs on the left.
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>  <!--case 1 turn 1 end-->
+        <!-- case1 turn2  -->
+        <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+            <!-- 1. 顶部大标题 Caption -->
+            <div style="background-color: #155098; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                <h3 style="margin: 0; color: #f7f3f3; font-size: 0.8em;">
+                    Round 2
+                </h3>
+            </div>
 
-  </body>
-  </html>
+            <div style="display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start;">
+                <!-- ==========================================
+                【第 1 列】输入部分 (Audio + Video + Image)
+                宽度 50%，垂直排列，每个块之间留一点空隙
+                ========================================== -->
+                <div class="input-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Input (Multimodal Query)
+                    </div>
+                    <!-- 外框包裹 3 行内容 -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+                        <!-- Row 1: Audio -->
+                        <div style="padding: 10px; background-color: #24012b; border-bottom: 1px solid #030000; display: flex; align-items: center; gap: 8px;">
+                            <div>
+                                    <strong class="prompt-strong">Audio Query:</strong>
+                            </div>
+                            <audio controls style="width: 100%; margin-top: 5px;">
+                                <source src="./assets/multi_turn/case2/turn2/query.mp3" type="audio/wav">
+                            </audio>
+                        </div>
+                        <!-- Row 2: Video (Muted) -->
+                        <div style="position: relative; width: 100%; display: flex; flex-direction: column; border-bottom: 1px solid #ccc;">
+                            <div style="padding: 8px 10px; background-color: #83059d; border-bottom: 1px solid #070000; font-weight: bold; color: #f7f4f4; font-size: 0.95em;">
+                                Video Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <video playsinline loop controls muted
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case2/turn1/query_vid.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- Row 3: Image -->
+                        <!-- <div style="position: relative; width: 100%; display: flex; flex-direction: column;">
+                            <div style="padding: 8px 10px; background-color: #fff; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95em;">
+                                Image Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <img src="./assets/multi_turn/case2/turn1/ref.png" 
+                                onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
+                                style="width: 100%; display: none; object-fit: cover;" 
+                                alt="Image Query" />
+                        </div> -->
+                    </div>
+                </div>
+                <!-- ==========================================
+                    【第 2 列】输出结果 (Result Video)
+                    宽度 50%
+                    ========================================== -->
+                <div class="output-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Generated Result
+                    </div>
+                    <!-- 这里加了 sticky 属性，如果左边很长，用户下滑时，右边的视频会“吸附”在顶部，不会消失 -->
+                    <div style="border: 2px solid #6a0dad; border-radius: 8px; overflow: hidden; position: sticky; top: 20px;">
+                        <div style="position: relative; width: 100%;">
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <!-- 结果视频 -->
+                            <video playsinline loop controls 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case2/turn2/res.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- <div class="prompt" style="padding: 15px; background-color: #fdfaff; border-top: 1px solid #eee;">
+                            <strong class="prompt-strong" style="color: #6a0dad;">Model Response:</strong> 
+                            <br>
+                            This is the final generated video response based on the audio, video, and image inputs on the left.
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <!-- all round -->
+        <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+            <!-- 1. 顶部大标题 Caption -->
+            <div style="background-color: #155098; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                <h3 style="margin: 0; color: #f7f3f3; font-size: 0.8em;">
+                    Round 3
+                </h3>
+            </div>
+
+            <div style="display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start;">
+                <!-- ==========================================
+                【第 1 列】输入部分 (Audio + Video + Image)
+                宽度 50%，垂直排列，每个块之间留一点空隙
+                ========================================== -->
+                <div class="input-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Input (Multimodal Query)
+                    </div>
+                    <!-- 外框包裹 3 行内容 -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+                        <!-- Row 1: Audio -->
+                        <div style="padding: 10px; background-color: #24012b; border-bottom: 1px solid #030000; display: flex; align-items: center; gap: 8px;">
+                            <div>
+                                    <strong class="prompt-strong">Audio Query:</strong>
+                            </div>
+                            <audio controls style="width: 100%; margin-top: 5px;">
+                                <source src="./assets/multi_turn/case2/turn3/query.mp3" type="audio/wav">
+                            </audio>
+                        </div>
+                        <!-- Row 2: Video (Muted) -->
+                        <div style="position: relative; width: 100%; display: flex; flex-direction: column; border-bottom: 1px solid #ccc;">
+                            <div style="padding: 8px 10px; background-color: #83059d; border-bottom: 1px solid #070000; font-weight: bold; color: #f7f4f4; font-size: 0.95em;">
+                                Video Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <video playsinline loop controls muted
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case2/turn1/query_vid.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- Row 3: Image -->
+                        <!-- <div style="position: relative; width: 100%; display: flex; flex-direction: column;">
+                            <div style="padding: 8px 10px; background-color: #fff; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95em;">
+                                Image Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <img src="./assets/multi_turn/case2/turn1/ref.png" 
+                                onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
+                                style="width: 100%; display: none; object-fit: cover;" 
+                                alt="Image Query" />
+                        </div> -->
+                    </div>
+                </div>
+                <!-- ==========================================
+                    【第 2 列】输出结果 (Result Video)
+                    宽度 50%
+                    ========================================== -->
+                <div class="output-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Generated Result
+                    </div>
+                    <!-- 这里加了 sticky 属性，如果左边很长，用户下滑时，右边的视频会“吸附”在顶部，不会消失 -->
+                    <div style="border: 2px solid #6a0dad; border-radius: 8px; overflow: hidden; position: sticky; top: 20px;">
+                        <div style="position: relative; width: 100%;">
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <!-- 结果视频 -->
+                            <video playsinline loop controls 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case2/turn3/res.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- <div class="prompt" style="padding: 15px; background-color: #fdfaff; border-top: 1px solid #eee;">
+                            <strong class="prompt-strong" style="color: #6a0dad;">Model Response:</strong> 
+                            <br>
+                            This is the final generated video response based on the audio, video, and image inputs on the left.
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+            <!-- 1. 顶部大标题 Caption -->
+            <div style="background-color: #a28908; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                <h3 style="margin: 0; color: #f7f3f3; font-size: 0.8em;">
+                    Full Dialogue
+                </h3>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start;">
+                <div class="output-column" style="width: 100%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="border: 2px solid #6a0dad; border-radius: 8px; overflow: hidden; position: sticky; top: 20px;">
+                        <div style="position: relative; width: 100%;">
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <video playsinline loop controls 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case2/demo1.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <!-- 对话2 -->
+    <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+        <div style="background-color: #1d0e4b; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                    <h3 style="margin: 0; color: #f7f3f3; font-size: 1.2em;">
+                        Dialogue 2
+                    </h3>
+        </div>
+        <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+            <!-- 1. 顶部大标题 Caption -->
+            <div style="background-color: #155098; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                <h3 style="margin: 0; color: #f7f3f3; font-size: 0.8em;">
+                    Round 1
+                </h3>
+            </div>
+
+            <div style="display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start;">
+                <div class="input-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Input (Multimodal Query)
+                    </div>
+                    <!-- 外框包裹 3 行内容 -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+                        <!-- Row 1: Audio -->
+                        <div style="padding: 10px; background-color: #24012b; border-bottom: 1px solid #030000; display: flex; align-items: center; gap: 8px;">
+                            <div>
+                                    <strong class="prompt-strong">Audio Query:</strong>
+                            </div>
+                            <audio controls style="width: 100%; margin-top: 5px;">
+                                <source src="./assets/multi_turn/case3/turn1/query.mp3" type="audio/wav">
+                            </audio>
+                        </div>
+                        <!-- Row 2: Video (Muted) -->
+                        <div style="position: relative; width: 100%; display: flex; flex-direction: column; border-bottom: 1px solid #ccc;">
+                            <div style="padding: 8px 10px; background-color: #83059d; border-bottom: 1px solid #070000; font-weight: bold; color: #f7f4f4; font-size: 0.95em;">
+                                Video Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <video playsinline loop controls muted
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case3/turn1/query_vid.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- Row 3: Image -->
+                        <!-- <div style="position: relative; width: 100%; display: flex; flex-direction: column;">
+                            <div style="padding: 8px 10px; background-color: #fff; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95em;">
+                                Image Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <img src="./assets/multi_turn/case2/turn1/ref.png" 
+                                onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
+                                style="width: 100%; display: none; object-fit: cover;" 
+                                alt="Image Query" />
+                        </div> -->
+                    </div>
+                </div>
+                <!-- ==========================================
+                    【第 2 列】输出结果 (Result Video)
+                    宽度 50%
+                    ========================================== -->
+                <div class="output-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Generated Result
+                    </div>
+                    <!-- 这里加了 sticky 属性，如果左边很长，用户下滑时，右边的视频会“吸附”在顶部，不会消失 -->
+                    <div style="border: 2px solid #6a0dad; border-radius: 8px; overflow: hidden; position: sticky; top: 20px;">
+                        <div style="position: relative; width: 100%;">
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <!-- 结果视频 -->
+                            <video playsinline loop controls 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case3/turn1/res.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- <div class="prompt" style="padding: 15px; background-color: #fdfaff; border-top: 1px solid #eee;">
+                            <strong class="prompt-strong" style="color: #6a0dad;">Model Response:</strong> 
+                            <br>
+                            This is the final generated video response based on the audio, video, and image inputs on the left.
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>  <!--case 1 turn 1 end-->
+        <!-- case1 turn2  -->
+        <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+            <!-- 1. 顶部大标题 Caption -->
+            <div style="background-color: #155098; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                <h3 style="margin: 0; color: #f7f3f3; font-size: 0.8em;">
+                    Round 2
+                </h3>
+            </div>
+
+            <div style="display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start;">
+                <!-- ==========================================
+                【第 1 列】输入部分 (Audio + Video + Image)
+                宽度 50%，垂直排列，每个块之间留一点空隙
+                ========================================== -->
+                <div class="input-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Input (Multimodal Query)
+                    </div>
+                    <!-- 外框包裹 3 行内容 -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+                        <!-- Row 1: Audio -->
+                        <div style="padding: 10px; background-color: #24012b; border-bottom: 1px solid #030000; display: flex; align-items: center; gap: 8px;">
+                            <div>
+                                    <strong class="prompt-strong">Audio Query:</strong>
+                            </div>
+                            <audio controls style="width: 100%; margin-top: 5px;">
+                                <source src="./assets/multi_turn/case3/turn2/query.mp3" type="audio/wav">
+                            </audio>
+                        </div>
+                        <!-- Row 2: Video (Muted) -->
+                        <div style="position: relative; width: 100%; display: flex; flex-direction: column; border-bottom: 1px solid #ccc;">
+                            <div style="padding: 8px 10px; background-color: #83059d; border-bottom: 1px solid #070000; font-weight: bold; color: #f7f4f4; font-size: 0.95em;">
+                                Video Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <video playsinline loop controls muted
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case3/turn1/query_vid.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- Row 3: Image -->
+                        <!-- <div style="position: relative; width: 100%; display: flex; flex-direction: column;">
+                            <div style="padding: 8px 10px; background-color: #fff; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95em;">
+                                Image Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <img src="./assets/multi_turn/case2/turn1/ref.png" 
+                                onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
+                                style="width: 100%; display: none; object-fit: cover;" 
+                                alt="Image Query" />
+                        </div> -->
+                    </div>
+                </div>
+                <!-- ==========================================
+                    【第 2 列】输出结果 (Result Video)
+                    宽度 50%
+                    ========================================== -->
+                <div class="output-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Generated Result
+                    </div>
+                    <!-- 这里加了 sticky 属性，如果左边很长，用户下滑时，右边的视频会“吸附”在顶部，不会消失 -->
+                    <div style="border: 2px solid #6a0dad; border-radius: 8px; overflow: hidden; position: sticky; top: 20px;">
+                        <div style="position: relative; width: 100%;">
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <!-- 结果视频 -->
+                            <video playsinline loop controls 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case3/turn2/res.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- <div class="prompt" style="padding: 15px; background-color: #fdfaff; border-top: 1px solid #eee;">
+                            <strong class="prompt-strong" style="color: #6a0dad;">Model Response:</strong> 
+                            <br>
+                            This is the final generated video response based on the audio, video, and image inputs on the left.
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <!-- all round -->
+        <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+            <!-- 1. 顶部大标题 Caption -->
+            <div style="background-color: #155098; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                <h3 style="margin: 0; color: #f7f3f3; font-size: 0.8em;">
+                    Round 3
+                </h3>
+            </div>
+
+            <div style="display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start;">
+                <!-- ==========================================
+                【第 1 列】输入部分 (Audio + Video + Image)
+                宽度 50%，垂直排列，每个块之间留一点空隙
+                ========================================== -->
+                <div class="input-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Input (Multimodal Query)
+                    </div>
+                    <!-- 外框包裹 3 行内容 -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+                        <!-- Row 1: Audio -->
+                        <div style="padding: 10px; background-color: #24012b; border-bottom: 1px solid #030000; display: flex; align-items: center; gap: 8px;">
+                            <div>
+                                    <strong class="prompt-strong">Audio Query:</strong>
+                            </div>
+                            <audio controls style="width: 100%; margin-top: 5px;">
+                                <source src="./assets/multi_turn/case3/turn3/query.mp3" type="audio/wav">
+                            </audio>
+                        </div>
+                        <!-- Row 2: Video (Muted) -->
+                        <div style="position: relative; width: 100%; display: flex; flex-direction: column; border-bottom: 1px solid #ccc;">
+                            <div style="padding: 8px 10px; background-color: #83059d; border-bottom: 1px solid #070000; font-weight: bold; color: #f7f4f4; font-size: 0.95em;">
+                                Video Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <video playsinline loop controls muted
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case3/turn1/query_vid.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- Row 3: Image -->
+                        <!-- <div style="position: relative; width: 100%; display: flex; flex-direction: column;">
+                            <div style="padding: 8px 10px; background-color: #fff; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95em;">
+                                Image Query
+                            </div>
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <img src="./assets/multi_turn/case2/turn1/ref.png" 
+                                onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
+                                style="width: 100%; display: none; object-fit: cover;" 
+                                alt="Image Query" />
+                        </div> -->
+                    </div>
+                </div>
+                <!-- ==========================================
+                    【第 2 列】输出结果 (Result Video)
+                    宽度 50%
+                    ========================================== -->
+                <div class="output-column" style="width: 50%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.2em; font-weight: bold; text-align: center; color: #b6b1ba;">
+                        Generated Result
+                    </div>
+                    <!-- 这里加了 sticky 属性，如果左边很长，用户下滑时，右边的视频会“吸附”在顶部，不会消失 -->
+                    <div style="border: 2px solid #6a0dad; border-radius: 8px; overflow: hidden; position: sticky; top: 20px;">
+                        <div style="position: relative; width: 100%;">
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <!-- 结果视频 -->
+                            <video playsinline loop controls 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case3/turn3/res.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                        <!-- <div class="prompt" style="padding: 15px; background-color: #fdfaff; border-top: 1px solid #eee;">
+                            <strong class="prompt-strong" style="color: #6a0dad;">Model Response:</strong> 
+                            <br>
+                            This is the final generated video response based on the audio, video, and image inputs on the left.
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+            <!-- 1. 顶部大标题 Caption -->
+            <div style="background-color: #a28908; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                <h3 style="margin: 0; color: #f7f3f3; font-size: 0.8em;">
+                    Full Dialogue
+                </h3>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start;">
+                <div class="output-column" style="width: 100%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="border: 2px solid #6a0dad; border-radius: 8px; overflow: hidden; position: sticky; top: 20px;">
+                        <div style="position: relative; width: 100%;">
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <video playsinline loop controls 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case3/demo2.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <!-- 对话3 -->
+    <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+        <div style="background-color: #1d0e4b; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                    <h3 style="margin: 0; color: #f7f3f3; font-size: 1.2em;">
+                        Dialogue 3
+                    </h3>
+        </div>
+        <div class="case-card" style="border: 1px solid #ccc; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; font-family: sans-serif;">
+            <!-- 1. 顶部大标题 Caption -->
+            <div style="background-color: #a28908; padding: 15px 20px; border-bottom: 1px solid #ddd; text-align: center;">
+                <h3 style="margin: 0; color: #f7f3f3; font-size: 0.8em;">
+                    Full Dialogue
+                </h3>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start;">
+                <div class="output-column" style="width: 100%; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="border: 2px solid #6a0dad; border-radius: 8px; overflow: hidden; position: sticky; top: 20px;">
+                        <div style="position: relative; width: 100%;">
+                            <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749;</div>
+                            </div>
+                            <video playsinline loop controls 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                                src="./assets/multi_turn/case1/demo3.mp4"
+                                style="width: 100%; display: none;"></video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    </section>
+
+    <section id="video">
+        <div class="title" style="font-family: 'Alegreya'; font-size: 1.6em;">
+          Motion Interactive Dialogue
+        </div>
+        <div class="description">
+            <em><strong>Please turn on the sound for watching.</strong></em>
+        </div>
+        <div class="flex flex-dynamic" style="flex-direction: row; align-items: center; gap: -1px;">
+            <div class="prompt-wrap full-screen-wrap" style="width: 50%; position: relative;">
+                <div class="loading-placeholder">
+                    <div class="loading-text">Loading...</div>
+                    <div class="loading-icon">&#9749</div>
+                </div>
+                <video playsinline loop controls onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/motion_dia/demo4_1.mp4"></video>
+            </div>
+            <div class="prompt-wrap full-screen-wrap" style="width: 50%; position: relative;">
+                <div class="loading-placeholder">
+                    <div class="loading-text">Loading...</div>
+                    <div class="loading-icon">&#9749</div>
+                </div>
+                <video playsinline loop controls onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/motion_dia/demo4_2.mp4"></video>
+            </div>
+            <div class="prompt-wrap full-screen-wrap" style="width: 50%; position: relative;">
+                <div class="loading-placeholder">
+                    <div class="loading-text">Loading...</div>
+                    <div class="loading-icon">&#9749</div>
+                </div>
+                <video playsinline loop controls onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/motion_dia/demo4_3.mp4"></video>
+            </div>
+            <div class="prompt-wrap full-screen-wrap" style="width: 50%; position: relative;">
+                <div class="loading-placeholder">
+                    <div class="loading-text">Loading...</div>
+                    <div class="loading-icon">&#9749</div>
+                </div>
+                <video playsinline loop controls onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/motion_dia/demo4_4.mp4"></video>
+            </div>
+        </div>
+    </section>
+    
+    </section> 
+    <section id="baselines">
+        <div class="title" style="font-family: 'Alegreya'; font-size: 1.6em;">
+            Compare With Baselines For Joint Audio-Video Generation (T2AV Task)
+        </div>
+        <div class="description">
+            <em><strong>Please turn on the sound for watching.</strong></em>
+        </div>
+        <div class="content">
+            <!-- Case 1 -->
+            <div class="comparison-case">
+                <!-- <div class="comparison-text-box">
+                    <div class="subtitle" style="font-family: 'Alegreya'; font-size: 1.6em;">Case 1</div>
+                    <div class="comp-prompt-box">
+                        <span class="comp-prompt-label">Video Caption</span>
+                        <span class="comp-prompt-content">
+                            "A person with long, wavy hair and tattoos gestures animatedly while seated at a table in a softly lit, modern room with framed pictures and a bar area, wearing a light gray "CANON" sweatshirt."
+                        </span>
+                    </div>
+                    <div class="comp-prompt-box">
+                        <span class="comp-prompt-label">Audio Caption</span>
+                        <span class="comp-prompt-content">
+                            "A lot of the software that exists right now for editing photos is great. It does take time to get used to.
+                            It does take patience to master fully. As skills improve, creativity flourishes and editing becomes fun.
+                            As proficiency grows, photo editing opens new possibilities, empowering users to craft some things.
+                            Tools become extensions of creativity, enabling intricate enhancements that bring photographic visions vividly to life."
+                        </span>
+                    </div>
+                </div> -->
+                
+                <div class="flex flex-dynamic" style="flex-direction: row; align-items: center; gap: -1px;">
+                    <div class="prompt-wrap full-screen-wrap" style="width: 32%; position: relative;">
+                        <div class="method-tag ours">UniVerse-1</div>
+                            <div class="loading-placeholder">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749</div>
+                            </div>
+                        <video playsinline loop controls onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/comp/universe.mp4"></video>                  
+                    </div>
+
+                    <div class="prompt-wrap full-screen-wrap" style="width: 32%; position: relative;">
+                        <div class="method-tag ours">OVI</div>
+                            <div class="loading-placeholder">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749</div>
+                            </div>
+                        <video playsinline loop controls onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/comp/ovi.mp4"></video>                  
+                    </div>
+
+                    <div class="prompt-wrap full-screen-wrap" style="width: 32%; position: relative;">
+                        <div class="method-tag ours">MAViD (Ours)</div>
+                            <div class="loading-placeholder">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">&#9749</div>
+                            </div>
+                        <video playsinline loop controls onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/comp/our.mp4"></video>                  
+                    </div>
+                </div>               
+            </div>
+    
+    </section>
+
+    
+
+    <section id="video">
+    <section class="ethics-section">
+        <h3>Ethics Statement</h3>
+        <p>
+        We acknowledge that Text-to-Sounding-Video generation technology, like other generative technologies, carries potential risks of misuse. The ability to create realistic and synchronized audio-visual content from text could be exploited to generate convincing disinformation and fraudulent materials. The primary motivation for our research, however, is positive. We believe this technology holds significant potential for beneficial applications. We are committed to the responsible advancement of this field and encourage continued research into synthetic content detection and the establishment of clear ethical guidelines for deployment.
+        </p>
+    </section>
+
+    <div class="description">
+            <em><strong>This page was built based on <a href="https://github.com/bridgedit-t2sv/bridgedit-t2sv.github.io">this project</a>.</strong></em>
+        </div>
+    
+
+    <!-- <section class="bibtex-section">
+        <h3>BibTeX</h3>
+        <pre class="bibtex-code">@misc{chen2025humo,
+            title={HuMo: Human-Centric Video Generation via Collaborative Multi-Modal Conditioning}, 
+            author={Liyang Chen and Tianxiang Ma and Jiawei Liu and Bingchuan Li and Zhuowei Chen and Lijie Liu and Xu He and Gen Li and Qian He and Zhiyong Wu},
+            year={2025},
+            eprint={2509.08519},
+            archivePrefix={arXiv},
+            primaryClass={cs.CV},
+            url={https://arxiv.org/abs/2509.08519}, 
+        }</pre>
+    </section> -->
+
+</body>
+</html>
